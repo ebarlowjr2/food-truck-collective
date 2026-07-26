@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #e4572e;
+  --color-brand-dark: #c1381a;
+  --color-accent: #f6ae2d;
+  --color-ink: #1c1a19;
+  --color-cream: #fff7ef;
+  --color-paper: #ffffff;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Leaflet map markers ---- */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: #e8eef0;
+}
+
+.truck-pin-wrap {
+  background: transparent;
+  border: 0;
+}
+
+.truck-pin {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.28));
+  transition: transform 0.15s ease;
+}
+
+.truck-pin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--pin, #e4572e);
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+}
+
+.truck-pin.is-active {
+  transform: scale(1.05) translateY(-2px);
+  z-index: 500;
+}
+
+.truck-pin__glyph {
+  position: relative;
+  z-index: 1;
+  font-size: 1.05rem;
+  line-height: 1;
+  transform: translateY(-3px);
+}
+
+/* ---- Leaflet popup ---- */
+.leaflet-popup-content-wrap {
+  border-radius: 12px;
+}
+.truck-popup__title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}
+.truck-popup__meta {
+  font-size: 0.78rem;
+  color: rgba(28, 26, 25, 0.6);
+  margin-top: 2px;
+}
+.truck-popup__status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.truck-popup__status.is-open {
+  color: #047857;
+}
+.truck-popup__status.is-closed {
+  color: rgba(28, 26, 25, 0.55);
+}
