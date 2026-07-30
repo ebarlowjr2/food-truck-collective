@@ -87,3 +87,13 @@ body {
 .truck-popup__status.is-closed {
   color: rgba(28, 26, 25, 0.55);
 }
+.truck-popup__menu {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-brand);
+}
+.truck-popup__menu:hover {
+  text-decoration: underline;
+}

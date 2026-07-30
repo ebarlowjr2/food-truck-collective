@@ -35,12 +35,12 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-cream">For Vendors</h3>
           <ul className="mt-3 space-y-2 text-sm text-cream/60">
             <li>
-              <a href="#vendors" className="hover:text-brand">
+              <a href="/vendors/join" className="hover:text-brand">
                 List your truck
               </a>
             </li>
             <li>
-              <a href="#vendors" className="hover:text-brand">
+              <a href="/#vendors" className="hover:text-brand">
                 Compliance resources
               </a>
             </li>

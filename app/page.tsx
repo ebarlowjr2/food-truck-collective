@@ -1,10 +1,15 @@
+import Link from "next/link";
 import LocateExperience from "@/components/LocateExperience";
-import { trucks } from "@/data/trucks";
-import { getStatus } from "@/lib/hours";
+import { getLiveTrucks } from "@/lib/liveData";
+import { getLiveStatus } from "@/lib/live";
 
-export default function Home() {
-  const openNow = trucks.filter((t) => getStatus(t).open).length;
-  const cities = new Set(trucks.map((t) => t.city)).size;
+// The map reflects live check-ins, so render per request (never statically cached).
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const trucks = await getLiveTrucks();
+  const liveNow = trucks.filter((t) => getLiveStatus(t).open).length;
+  const cuisines = new Set(trucks.map((t) => t.cuisine)).size;
 
   return (
     <>
@@ -32,26 +37,26 @@ export default function Home() {
               >
                 Find a truck near me
               </a>
-              <a
-                href="#vendors"
+              <Link
+                href="/vendors/join"
                 className="rounded-full border border-ink/15 bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-brand hover:text-brand"
               >
                 List your truck
-              </a>
+              </Link>
             </div>
 
             <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
               <div className="flex items-baseline gap-2">
                 <dt className="text-2xl font-extrabold text-ink">{trucks.length}</dt>
-                <dd className="text-ink/60">trucks in the collective</dd>
+                <dd className="text-ink/60">trucks on the map</dd>
               </div>
               <div className="flex items-baseline gap-2">
-                <dt className="text-2xl font-extrabold text-emerald-600">{openNow}</dt>
-                <dd className="text-ink/60">open right now</dd>
+                <dt className="text-2xl font-extrabold text-emerald-600">{liveNow}</dt>
+                <dd className="text-ink/60">live right now</dd>
               </div>
               <div className="flex items-baseline gap-2">
-                <dt className="text-2xl font-extrabold text-ink">{cities}</dt>
-                <dd className="text-ink/60">cities covered</dd>
+                <dt className="text-2xl font-extrabold text-ink">{cuisines}</dt>
+                <dd className="text-ink/60">cuisines</dd>
               </div>
             </dl>
           </div>
@@ -89,12 +94,12 @@ export default function Home() {
                 inspections, and business licenses across counties. We put the checklists,
                 forms, and renewal reminders in one place — then put your truck on the map.
               </p>
-              <a
-                href="#vendors"
+              <Link
+                href="/vendors/join"
                 className="mt-5 inline-block rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark"
               >
                 Join the collective
-              </a>
+              </Link>
             </div>
             <ul className="grid gap-3 sm:grid-cols-2">
               {[

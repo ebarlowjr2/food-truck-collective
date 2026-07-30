@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import type { Truck } from "@/lib/types";
-import { getStatus } from "@/lib/hours";
+import type { LiveTruck } from "@/lib/live";
+import { getLiveStatus } from "@/lib/live";
 
 // Leaflet touches `window` on import, so the map is client-only.
 const TruckMap = dynamic(() => import("./TruckMap"), {
@@ -15,26 +15,26 @@ const TruckMap = dynamic(() => import("./TruckMap"), {
   ),
 });
 
-type Filter = "all" | "open";
+type Filter = "all" | "live";
 
-export default function LocateExperience({ trucks }: { trucks: Truck[] }) {
+export default function LocateExperience({ trucks }: { trucks: LiveTruck[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
 
   const decorated = useMemo(
     () =>
       trucks
-        .map((t) => ({ truck: t, status: getStatus(t) }))
+        .map((t) => ({ truck: t, status: getLiveStatus(t) }))
         .sort((a, b) => Number(b.status.open) - Number(a.status.open)),
     [trucks]
   );
 
   const visible = useMemo(
-    () => (filter === "open" ? decorated.filter((d) => d.status.open) : decorated),
+    () => (filter === "live" ? decorated.filter((d) => d.status.open) : decorated),
     [decorated, filter]
   );
 
-  const openCount = decorated.filter((d) => d.status.open).length;
+  const liveCount = decorated.filter((d) => d.status.open).length;
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_380px]">
@@ -56,12 +56,12 @@ export default function LocateExperience({ trucks }: { trucks: Truck[] }) {
               All {trucks.length}
             </button>
             <button
-              onClick={() => setFilter("open")}
+              onClick={() => setFilter("live")}
               className={`rounded-full px-3 py-1 transition ${
-                filter === "open" ? "bg-brand text-white" : "text-ink/70"
+                filter === "live" ? "bg-brand text-white" : "text-ink/70"
               }`}
             >
-              Open now {openCount}
+              Live now {liveCount}
             </button>
           </div>
         </div>
@@ -89,10 +89,9 @@ export default function LocateExperience({ trucks }: { trucks: Truck[] }) {
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center justify-between gap-2">
                       <span className="truncate font-semibold text-ink">{truck.name}</span>
-                      <span className="shrink-0 text-xs text-ink/50">{truck.priceRange}</span>
                     </span>
                     <span className="mt-0.5 block truncate text-xs text-ink/60">
-                      {truck.cuisine} · {truck.city}
+                      {truck.cuisine} · {truck.address}
                     </span>
                     <span
                       className={`mt-1.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${
@@ -113,7 +112,7 @@ export default function LocateExperience({ trucks }: { trucks: Truck[] }) {
           })}
           {visible.length === 0 && (
             <li className="rounded-xl border border-dashed border-black/15 p-6 text-center text-sm text-ink/50">
-              No trucks open right now. Check back soon!
+              No trucks checked in right now. Check back soon!
             </li>
           )}
         </ul>
