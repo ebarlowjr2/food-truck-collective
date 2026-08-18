@@ -3,7 +3,7 @@ import Link from "next/link";
 import LoginForm from "@/components/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Vendor login — Central Alabama Food Trucks",
+  title: "Vendor login — OnTheCurb",
   description: "Sign in to manage your food-truck listing.",
 };
 

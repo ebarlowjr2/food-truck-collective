@@ -21,8 +21,8 @@ export default async function Header() {
             🚚
           </span>
           <span className="leading-tight">
-            <span className="block text-[15px] text-ink">Central AL</span>
-            <span className="-mt-1 block text-[13px] text-brand">Food Trucks</span>
+            <span className="block text-[15px] text-ink">OnTheCurb</span>
+            <span className="-mt-1 block text-[13px] text-brand">Central Alabama</span>
           </span>
         </Link>
 

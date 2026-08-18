@@ -17,7 +17,7 @@ const siteUrl =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000");
 
-const title = "Central Alabama Food Trucks — Locate, Book & List Trucks";
+const title = "OnTheCurb — Find Food Trucks in Central Alabama";
 const description =
   "Find central Alabama food trucks in real time on a live map, book them for private events, and get compliance resources for vendors.";
 
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    siteName: "Central Alabama Food Trucks",
+    siteName: "OnTheCurb",
     type: "website",
     locale: "en_US",
   },

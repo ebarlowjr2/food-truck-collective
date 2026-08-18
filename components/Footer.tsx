@@ -7,7 +7,7 @@ export default function Footer() {
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-base">
               🚚
             </span>
-            Central Alabama Food Trucks
+            OnTheCurb
           </div>
           <p className="mt-3 max-w-sm text-sm text-cream/60">
             A collective for central Alabama&apos;s food-truck community — find trucks in
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/5 py-5 text-center text-xs text-cream/40">
-        © {new Date().getFullYear()} Central Alabama Food Trucks. Built for the local
+        © {new Date().getFullYear()} OnTheCurb. Built for the local
         food-truck community.
       </div>
     </footer>

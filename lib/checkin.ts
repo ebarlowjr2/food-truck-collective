@@ -49,7 +49,7 @@ export async function geocodeAddress(
     const res = await fetch(url, {
       headers: {
         // Nominatim requires a descriptive User-Agent.
-        "User-Agent": "CentralALFoodTrucks/1.0 (SMS check-in geocoder)",
+        "User-Agent": "OnTheCurb/1.0 (SMS check-in geocoder)",
       },
     });
     if (!res.ok) return null;

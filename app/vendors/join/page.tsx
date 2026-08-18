@@ -3,7 +3,7 @@ import Link from "next/link";
 import VendorOnboarding from "@/components/VendorOnboarding";
 
 export const metadata: Metadata = {
-  title: "List your truck — Central Alabama Food Trucks",
+  title: "List your truck — OnTheCurb",
   description:
     "Join the central Alabama food-truck collective. Add your truck, upload a menu, and get a check-in ID to place yourself on the live map by text.",
 };
