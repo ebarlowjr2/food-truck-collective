@@ -9,10 +9,34 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// Absolute base for OG/Twitter image URLs. Uses the Vercel deployment URL in
+// production, or NEXT_PUBLIC_SITE_URL if you set a custom domain.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const title = "OnTheCurb — Find Food Trucks in Central Alabama";
+const description =
+  "Find central Alabama food trucks in real time on a live map, book them for private events, and get compliance resources for vendors.";
+
 export const metadata: Metadata = {
-  title: "Central Alabama Food Trucks — Locate, Book & List Trucks",
-  description:
-    "Find central Alabama food trucks in real time on a live map, book them for private events, and get compliance resources for vendors.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    siteName: "OnTheCurb",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({

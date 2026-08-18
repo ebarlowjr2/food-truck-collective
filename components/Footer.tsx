@@ -7,7 +7,7 @@ export default function Footer() {
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-base">
               🚚
             </span>
-            Central Alabama Food Trucks
+            OnTheCurb
           </div>
           <p className="mt-3 max-w-sm text-sm text-cream/60">
             A collective for central Alabama&apos;s food-truck community — find trucks in
@@ -35,12 +35,12 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-cream">For Vendors</h3>
           <ul className="mt-3 space-y-2 text-sm text-cream/60">
             <li>
-              <a href="#vendors" className="hover:text-brand">
+              <a href="/vendors/join" className="hover:text-brand">
                 List your truck
               </a>
             </li>
             <li>
-              <a href="#vendors" className="hover:text-brand">
+              <a href="/#vendors" className="hover:text-brand">
                 Compliance resources
               </a>
             </li>
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/5 py-5 text-center text-xs text-cream/40">
-        © {new Date().getFullYear()} Central Alabama Food Trucks. Built for the local
+        © {new Date().getFullYear()} OnTheCurb. Built for the local
         food-truck community.
       </div>
     </footer>

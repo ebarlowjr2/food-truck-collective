@@ -29,3 +29,53 @@ export interface Truck {
   specialties: string[];
   priceRange: PriceRange;
 }
+
+/* ---------------------------------------------------------------------------
+ * Vendors (onboarding)
+ * ------------------------------------------------------------------------- */
+
+export type VendorType = "truck" | "trailer" | "table" | "tent";
+
+export interface VendorLinks {
+  website?: string;
+  facebook?: string;
+  instagram?: string;
+  x?: string;
+}
+
+export interface Vendor {
+  id: string;
+  /** Short, human-textable code used for SMS check-ins, e.g. "AL-7K9Q". */
+  checkInId: string;
+  ownerName: string;
+  email: string;
+  businessName: string;
+  vendorType: VendorType;
+  cuisine: string;
+  description?: string;
+  phone: string;
+  /** Name of the uploaded menu PDF (file itself lives in storage later). */
+  menuFileName?: string;
+  links: VendorLinks;
+  /** Vendor has no website and opted into a free build from the collective. */
+  wantsFreeWebsite: boolean;
+  createdAt: string;
+}
+
+/* ---------------------------------------------------------------------------
+ * SMS check-ins ("text your location")
+ * ------------------------------------------------------------------------- */
+
+export interface CheckIn {
+  checkInId: string;
+  /** Phone number the text came from. */
+  from: string;
+  rawText: string;
+  address: string;
+  /** Free-text day/time window, e.g. "Sat 11am-2pm". */
+  when?: string;
+  lat?: number;
+  lng?: number;
+  geocoded: boolean;
+  receivedAt: string;
+}

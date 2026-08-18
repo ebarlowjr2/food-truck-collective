@@ -4,10 +4,10 @@ import { useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import type { Truck } from "@/lib/types";
-import { getStatus } from "@/lib/hours";
+import type { LiveTruck } from "@/lib/live";
+import { getLiveStatus } from "@/lib/live";
 
-function pinIcon(truck: Truck, active: boolean): L.DivIcon {
+function pinIcon(truck: LiveTruck, active: boolean): L.DivIcon {
   const size = active ? 52 : 42;
   return L.divIcon({
     className: "truck-pin-wrap",
@@ -21,7 +21,7 @@ function pinIcon(truck: Truck, active: boolean): L.DivIcon {
 }
 
 /** Fit the map to all trucks once, on mount. */
-function FitBounds({ trucks }: { trucks: Truck[] }) {
+function FitBounds({ trucks }: { trucks: LiveTruck[] }) {
   const map = useMap();
   useEffect(() => {
     if (trucks.length === 0) return;
@@ -36,7 +36,7 @@ function FlyToSelected({
   truck,
   markerRefs,
 }: {
-  truck: Truck | null;
+  truck: LiveTruck | null;
   markerRefs: React.MutableRefObject<Record<string, L.Marker | null>>;
 }) {
   const map = useMap();
@@ -54,7 +54,7 @@ function FlyToSelected({
 }
 
 export interface TruckMapProps {
-  trucks: Truck[];
+  trucks: LiveTruck[];
   selectedId: string | null;
   onSelect: (id: string) => void;
 }
@@ -81,7 +81,7 @@ export default function TruckMap({ trucks, selectedId, onSelect }: TruckMapProps
       <FitBounds trucks={trucks} />
       <FlyToSelected truck={selectedTruck} markerRefs={markerRefs} />
       {trucks.map((truck) => {
-        const status = getStatus(truck);
+        const status = getLiveStatus(truck);
         return (
           <Marker
             key={truck.id}
@@ -98,7 +98,7 @@ export default function TruckMap({ trucks, selectedId, onSelect }: TruckMapProps
                   <span aria-hidden>{truck.emoji}</span> {truck.name}
                 </div>
                 <div className="truck-popup__meta">
-                  {truck.cuisine} · {truck.city}
+                  {truck.cuisine} · {truck.address}
                 </div>
                 <div
                   className={`truck-popup__status ${status.open ? "is-open" : "is-closed"}`}
@@ -106,6 +106,16 @@ export default function TruckMap({ trucks, selectedId, onSelect }: TruckMapProps
                   {status.open ? "● " : "○ "}
                   {status.label}
                 </div>
+                {truck.menuUrl && (
+                  <a
+                    className="truck-popup__menu"
+                    href={truck.menuUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    📄 View menu
+                  </a>
+                )}
               </div>
             </Popup>
           </Marker>
