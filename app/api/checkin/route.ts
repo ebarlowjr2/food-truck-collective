@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { parseCheckInText, geocodeAddress } from "@/lib/checkin";
 import { recentCheckIns } from "@/lib/liveData";
 import { createClient } from "@/lib/supabase/server";
+import { verifyTwilioSignature, twilioWebhookUrl } from "@/lib/twilio";
 import { CHECKIN_EXAMPLE } from "@/lib/config";
 
 function escapeXml(input: string): string {
@@ -25,10 +26,10 @@ function twiml(message: string): NextResponse {
  *
  * Point your Twilio number's "A message comes in" webhook here (POST).
  * Twilio sends `application/x-www-form-urlencoded` with `From` and `Body`.
- * JSON is also accepted for easy local testing.
+ * JSON is also accepted for easy local testing (no signature required).
  *
- * TODO (Twilio phase): validate the `X-Twilio-Signature` header before trusting
- * the request.
+ * Security: when `TWILIO_AUTH_TOKEN` is set, form-encoded requests must carry a
+ * valid `X-Twilio-Signature`, so only genuine Twilio traffic is accepted.
  */
 export async function POST(req: Request): Promise<NextResponse> {
   const contentType = req.headers.get("content-type") ?? "";
@@ -41,8 +42,26 @@ export async function POST(req: Request): Promise<NextResponse> {
     body = json.Body ?? json.body ?? "";
   } else {
     const form = await req.formData();
-    from = String(form.get("From") ?? "");
-    body = String(form.get("Body") ?? "");
+    const params: Record<string, string> = {};
+    for (const [key, value] of form.entries()) {
+      params[key] = typeof value === "string" ? value : "";
+    }
+    from = params.From ?? "";
+    body = params.Body ?? "";
+
+    // Reject spoofed webhooks once an Auth Token is configured.
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    if (authToken) {
+      const signature = req.headers.get("x-twilio-signature");
+      const url = twilioWebhookUrl(req);
+      if (!verifyTwilioSignature(url, params, signature, authToken)) {
+        console.error("check-in: rejected invalid Twilio signature", {
+          url,
+          hasSignature: Boolean(signature),
+        });
+        return new NextResponse("Invalid Twilio signature", { status: 403 });
+      }
+    }
   }
 
   const parsed = parseCheckInText(body);
