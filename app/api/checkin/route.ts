@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { parseCheckInText, geocodeAddress } from "@/lib/checkin";
+import { parseCheckInText } from "@/lib/checkin";
+import { processCheckIn } from "@/lib/checkinService";
 import { recentCheckIns } from "@/lib/liveData";
 import { createClient } from "@/lib/supabase/server";
 import { verifyTwilioSignature, twilioWebhookUrl } from "@/lib/twilio";
@@ -72,43 +73,23 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   const supabase = await createClient();
+  const result = await processCheckIn(supabase, {
+    checkInId: parsed.checkInId,
+    address: parsed.address,
+    when: parsed.when ?? null,
+    fromPhone: from || null,
+    rawText: body,
+  });
 
-  // Only registered vendors can place themselves on the map.
-  const { data: vendor, error: vendorErr } = await supabase
-    .from("vendors")
-    .select("check_in_id")
-    .eq("check_in_id", parsed.checkInId)
-    .maybeSingle();
-
-  if (vendorErr) {
-    console.error("check-in: vendor lookup failed", vendorErr);
-    return twiml("Something went wrong on our end. Please try again in a minute.");
-  }
-  if (!vendor) {
+  if (result.status === "unknown_vendor") {
     return twiml(
       `We don't recognize the ID "${parsed.checkInId}". List your truck to get your check-in ID, then text your spot.`
     );
   }
-
-  const geo = await geocodeAddress(parsed.address);
-
-  const { error: insertErr } = await supabase.from("check_ins").insert({
-    check_in_id: parsed.checkInId,
-    from_phone: from || null,
-    raw_text: body,
-    address: parsed.address,
-    when_text: parsed.when ?? null,
-    lat: geo?.lat ?? null,
-    lng: geo?.lng ?? null,
-    geocoded: Boolean(geo),
-  });
-
-  if (insertErr) {
-    console.error("check-in: insert failed", insertErr);
+  if (result.status === "error") {
     return twiml("Something went wrong saving your check-in. Please try again in a minute.");
   }
-
-  if (!geo) {
+  if (!result.geocoded) {
     return twiml(
       `Got your check-in, but we couldn't pin "${parsed.address}". Try adding a city + state. We saved it for ${
         parsed.when ?? "today"

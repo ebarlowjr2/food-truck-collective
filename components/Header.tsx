@@ -39,6 +39,12 @@ export default async function Header() {
             <span className="hidden text-sm text-ink/60 sm:inline" title={user.email ?? undefined}>
               {user.email}
             </span>
+            <Link
+              href="/checkin"
+              className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark"
+            >
+              Check in
+            </Link>
             <form action="/auth/signout" method="post">
               <button
                 type="submit"

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { generateCheckInId } from "@/lib/id";
-import { CHECKIN_PHONE, CHECKIN_EXAMPLE } from "@/lib/config";
 import type { VendorType } from "@/lib/types";
 
 type StepId = "account" | "rig" | "menu" | "links";
@@ -466,7 +465,6 @@ function Field({
 }
 
 function SuccessScreen({ form, checkInId }: { form: FormState; checkInId: string }) {
-  const smsBody = `${checkInId} 1728 1st Ave N, Birmingham; Sat 11am-2pm`;
   return (
     <div className="mx-auto max-w-2xl text-center">
       <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-emerald-100 text-2xl">
@@ -496,24 +494,26 @@ function SuccessScreen({ form, checkInId }: { form: FormState; checkInId: string
         <div className="mt-1 font-mono text-4xl font-extrabold tracking-tight text-ink">
           {checkInId}
         </div>
+        <p className="mt-2 text-xs text-ink/50">
+          🔒 Keep this private — anyone with your code can set your truck&apos;s spot on the map.
+        </p>
       </div>
 
-      {/* SMS instructions */}
+      {/* Web check-in */}
       <div className="mt-4 rounded-2xl border border-black/10 bg-white p-6 text-left">
-        <h3 className="font-bold text-ink">📍 Put yourself on the map by text</h3>
+        <h3 className="font-bold text-ink">📍 Put yourself on the map</h3>
         <p className="mt-1 text-sm text-ink/60">
-          When you know where you&apos;ll be, text your spot to{" "}
-          <span className="font-semibold text-ink">{CHECKIN_PHONE}</span>:
+          When you know where you&apos;ll be parked, check in with your code and address. It
+          takes a few seconds, and you can update it any time your truck moves.
         </p>
-        <div className="mt-3 rounded-xl bg-ink px-4 py-3 font-mono text-sm text-cream">
-          {smsBody}
-        </div>
-        <p className="mt-3 text-xs text-ink/50">
-          Format: <span className="font-mono">&lt;YourID&gt; &lt;address&gt;; &lt;day &amp; time&gt;</span>
-          . Example: <span className="font-mono">{CHECKIN_EXAMPLE}</span>
-        </p>
-        <p className="mt-1 text-xs text-ink/40">
-          (SMS goes live once the collective connects its texting number.)
+        <Link
+          href={`/checkin?code=${checkInId}`}
+          className="mt-4 inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark"
+        >
+          Check in now →
+        </Link>
+        <p className="mt-3 text-xs text-ink/40">
+          Texting your spot is coming soon — for now, check in here on the web.
         </p>
       </div>
 
