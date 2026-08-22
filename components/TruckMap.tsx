@@ -20,16 +20,13 @@ function pinIcon(truck: LiveTruck, active: boolean): L.DivIcon {
   });
 }
 
-/** Fit the map to all trucks once, on mount. */
-function FitBounds({ trucks }: { trucks: LiveTruck[] }) {
-  const map = useMap();
-  useEffect(() => {
-    if (trucks.length === 0) return;
-    const bounds = L.latLngBounds(trucks.map((t) => [t.lat, t.lng] as [number, number]));
-    map.fitBounds(bounds, { padding: [48, 48], maxZoom: 11 });
-  }, [map, trucks]);
-  return null;
-}
+/**
+ * Initial map focus. Launching in the Montgomery, AL region for now, so the map
+ * centers here on load. Trucks elsewhere are still on the map — pan/zoom to reach
+ * them, or tap one in the list to fly there.
+ */
+const MONTGOMERY_CENTER: [number, number] = [32.3668, -86.3];
+const MONTGOMERY_ZOOM = 11;
 
 /** Fly to and open the popup for the selected truck. */
 function FlyToSelected({
@@ -68,17 +65,15 @@ export default function TruckMap({ trucks, selectedId, onSelect }: TruckMapProps
 
   return (
     <MapContainer
-      center={[33.1, -86.6]}
-      zoom={8}
+      center={MONTGOMERY_CENTER}
+      zoom={MONTGOMERY_ZOOM}
       scrollWheelZoom
       className="h-full w-full"
-      // Central Alabama; FitBounds overrides this on mount.
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds trucks={trucks} />
       <FlyToSelected truck={selectedTruck} markerRefs={markerRefs} />
       {trucks.map((truck) => {
         const status = getLiveStatus(truck);
