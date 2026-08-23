@@ -422,6 +422,19 @@ export default function VendorOnboarding() {
             {isLast ? (submitting ? "Creating your listing…" : "Finish & get my ID") : "Continue"}
           </button>
         </div>
+        {isLast && (
+          <p className="mt-4 text-center text-xs text-ink/50">
+            By finishing, you agree to OnTheCurb&apos;s{" "}
+            <Link href="/terms" className="font-semibold text-brand hover:underline">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" className="font-semibold text-brand hover:underline">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        )}
         {submitError && (
           <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
             {submitError}
