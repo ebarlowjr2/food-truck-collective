@@ -170,3 +170,47 @@ body {
     animation: none;
   }
 }
+
+/* ---- Legal / policy pages ---- */
+.legal h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-ink);
+  margin-top: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+.legal h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-top: 1.25rem;
+  margin-bottom: 0.35rem;
+}
+.legal p,
+.legal li {
+  color: rgba(28, 26, 25, 0.75);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+.legal p {
+  margin-top: 0.75rem;
+}
+.legal ul {
+  margin-top: 0.6rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.legal li {
+  margin-top: 0.35rem;
+}
+.legal a {
+  color: var(--color-brand);
+  font-weight: 600;
+}
+.legal a:hover {
+  text-decoration: underline;
+}
+.legal strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}

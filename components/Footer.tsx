@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-black/5 bg-ink text-cream/80">
@@ -47,9 +49,18 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/5 py-5 text-center text-xs text-cream/40">
-        © {new Date().getFullYear()} OnTheCurb. Built for the local
-        food-truck community.
+      <div className="border-t border-white/5 py-5">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-cream/40 sm:flex-row sm:px-6">
+          <span>© {new Date().getFullYear()} OnTheCurb. Built for the local food-truck community.</span>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="hover:text-brand">
+              Terms
+            </Link>
+            <Link href="/privacy" className="hover:text-brand">
+              Privacy
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
