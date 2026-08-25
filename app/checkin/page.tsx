@@ -16,18 +16,32 @@ export default async function CheckInPage({
 
   return (
     <div className="mx-auto max-w-md px-4 py-12 sm:px-6 sm:py-16">
-      <div className="mb-6">
-        <Link href="/" className="text-sm font-medium text-ink/50 transition hover:text-brand">
-          ← Back home
-        </Link>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink">
-          Put yourself on the map
+      <Link
+        href="/"
+        className="text-sm font-medium text-ink/50 transition hover:text-brand"
+      >
+        ← Back home
+      </Link>
+
+      <div className="mt-8 text-center">
+        <span className="drop-pin" aria-hidden>
+          <span className="drop-pin__glyph">🚚</span>
+        </span>
+        <div className="drop-pin-ground" aria-hidden />
+        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+          Vendor check-in
+        </p>
+        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+          Drop your pin
         </h1>
-        <p className="mt-2 text-ink/60">
-          Tell customers where you&apos;re parked. Update it any time your truck moves.
+        <p className="mx-auto mt-2 max-w-sm text-ink/60">
+          Tell customers where your truck is parked right now. Update it any time you move.
         </p>
       </div>
-      <CheckInForm initialCode={code ?? ""} />
+
+      <div className="mt-8">
+        <CheckInForm initialCode={code ?? ""} />
+      </div>
     </div>
   );
 }
