@@ -1,0 +1,53 @@
+<!--
+  OnTheCurb — Supabase "Confirm signup" email template.
+
+  Paste this into: Supabase Dashboard → Authentication → Emails → Templates →
+  Confirm signup (Message body). Suggested subject: "Confirm your email — OnTheCurb"
+
+  Uses the server-side (token_hash) flow, which our /auth/confirm route handles.
+  Requires custom SMTP (Resend) configured in Supabase for branded delivery.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fff7ef;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1c1a19;">
+  <tr>
+    <td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border:1px solid rgba(0,0,0,0.08);border-radius:16px;overflow:hidden;">
+        <tr>
+          <td style="padding:24px 28px;border-bottom:1px solid rgba(0,0,0,0.06);">
+            <span style="display:inline-block;width:34px;height:34px;line-height:34px;text-align:center;background:#e4572e;border-radius:9px;font-size:18px;vertical-align:middle;">🚚</span>
+            <span style="font-weight:800;font-size:16px;letter-spacing:-0.2px;vertical-align:middle;margin-left:8px;">OnTheCurb</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px;">
+            <h1 style="margin:0 0 8px;font-size:22px;font-weight:800;letter-spacing:-0.4px;">Confirm your email</h1>
+            <p style="margin:0 0 22px;font-size:15px;line-height:1.6;color:rgba(28,26,25,0.72);">
+              Thanks for listing your truck on OnTheCurb. Confirm your email to activate your account and start putting yourself on the map.
+            </p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="border-radius:999px;background:#e4572e;">
+                  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email" style="display:inline-block;padding:13px 26px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:999px;">Confirm my email</a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:22px 0 0;font-size:13px;line-height:1.6;color:rgba(28,26,25,0.55);">
+              If the button doesn&rsquo;t work, copy and paste this link into your browser:<br />
+              <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email" style="color:#e4572e;word-break:break-all;">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email</a>
+            </p>
+            <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:rgba(28,26,25,0.55);">
+              Didn&rsquo;t sign up for OnTheCurb? You can safely ignore this email.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:18px 28px;border-top:1px solid rgba(0,0,0,0.06);font-size:12px;line-height:1.6;color:rgba(28,26,25,0.45);">
+            <a href="{{ .SiteURL }}/terms" style="color:#e4572e;text-decoration:none;">Terms</a> &middot;
+            <a href="{{ .SiteURL }}/privacy" style="color:#e4572e;text-decoration:none;">Privacy</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

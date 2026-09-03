@@ -145,6 +145,12 @@ export default function VendorOnboarding() {
         return;
       }
       setCheckInId(code);
+      // Fire-and-forget welcome email (best-effort; never blocks onboarding).
+      void fetch("/api/onboard-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, email: form.email }),
+      }).catch(() => {});
     } catch {
       setSubmitError("Couldn't reach the server. Check your connection and try again.");
     } finally {
