@@ -9,13 +9,12 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-// Absolute base for OG/Twitter image URLs. Uses the Vercel deployment URL in
-// production, or NEXT_PUBLIC_SITE_URL if you set a custom domain.
+// Absolute base for OG/Twitter image + canonical URLs. Defaults to the real
+// domain in production so shared links resolve on onthecurb.app (not a
+// *.vercel.app URL). Override with NEXT_PUBLIC_SITE_URL if the domain changes.
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000");
+  (process.env.NODE_ENV === "production" ? "https://onthecurb.app" : "http://localhost:3000");
 
 const title = "OnTheCurb — Find Food Trucks in Central Alabama";
 const description =
