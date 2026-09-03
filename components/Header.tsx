@@ -36,9 +36,12 @@ export default async function Header() {
 
         {user ? (
           <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-ink/60 sm:inline" title={user.email ?? undefined}>
-              {user.email}
-            </span>
+            <Link
+              href="/vendors/dashboard"
+              className="hidden text-sm font-medium text-ink/70 transition hover:text-brand sm:inline"
+            >
+              Dashboard
+            </Link>
             <Link
               href="/checkin"
               className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark"
