@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 export const alt =
-  "OnTheCurb — locate your food truck on a live map";
+  "OnTheCurb — find food trucks near you on a live map";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -144,25 +144,25 @@ export default async function Image() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
-                fontSize: 92,
+                fontSize: 72,
                 fontWeight: 800,
                 color: INK,
                 lineHeight: 1.02,
                 letterSpacing: -2,
               }}
             >
-              Locate your
+              Find food trucks
             </div>
             <div
               style={{
-                fontSize: 92,
+                fontSize: 72,
                 fontWeight: 800,
                 color: BRAND,
                 lineHeight: 1.02,
                 letterSpacing: -2,
               }}
             >
-              food truck.
+              near you.
             </div>
             <div
               style={{
