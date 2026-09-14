@@ -23,7 +23,7 @@ export default async function Home() {
               🛰️ Live map · Central Alabama
             </span>
             <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              Locate your <span className="text-brand">food truck</span>.
+              Find <span className="text-brand">food trucks</span> near you.
             </h1>
             <p className="mt-4 max-w-xl text-lg text-ink/70">
               A collective for central Alabama&apos;s food-truck community. See where every
@@ -68,7 +68,7 @@ export default async function Home() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-6 flex flex-col gap-1">
             <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-              Locate your food truck
+              Find food trucks near you
             </h2>
             <p className="text-ink/60">
               Tap a truck to fly the map to its current spot and see today&apos;s hours.
