@@ -121,7 +121,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_my_vendor: {
+        Args: Record<PropertyKey, never>;
+        Returns: Database["public"]["Tables"]["vendors"]["Row"];
+      };
     };
     Enums: {
       vendor_type: "truck" | "trailer" | "table" | "tent";

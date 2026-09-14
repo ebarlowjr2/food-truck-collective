@@ -27,7 +27,7 @@ export default function LoginForm() {
       setLoading(false);
       return;
     }
-    router.push("/");
+    router.push("/vendors/dashboard");
     router.refresh();
   }
 
